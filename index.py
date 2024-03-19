@@ -1,17 +1,12 @@
-from defs import total
-from defs import sublinharPalavra
-from defs import cadastro
-import os
+import defs
+
 from time import sleep
 from time import ctime
-
-# Função de cadastro
-
 
 def cadastroCliente():
     escolha = 0
     while escolha != 1:
-        os.system('cls')
+        defs.clearTerminal()
         cliente = {
             'nome': str(input('Nome do cliente:\n')).lower(),
             'idade': int(input('Idade do cliente:\n')),
@@ -23,25 +18,23 @@ def cadastroCliente():
         for c in (cliente.items()):
             print(c)
 
-        sublinharPalavra('\nEstá tudo certo?\n[ 1 ] - Sim\n[ 2 ] - Não')
+        defs.sublinharPalavra('\nEstá tudo certo?\n[ 1 ] - Sim\n[ 2 ] - Não')
         escolha = int(input(''))
 
         if escolha == 1:
-            os.system('cls')
-            sublinharPalavra('Cliente sendo cadastrado...')
+            defs.clearTerminal()
+            defs.sublinharPalavra('Cliente sendo cadastrado...')
             sleep(2)
-            os.system('cls')
-            sublinharPalavra('Cliente cadastrado com sucesso')
+            defs.clearTerminal()
+            defs.sublinharPalavra('Cliente cadastrado com sucesso')
             sleep(2)
             clientesCadastrados.append(cliente)
             break
 
 
-# Variaveis
 carteira = 0
 totalDeSaques = 0
 totalDeDepositos = 0
-
 depositosEfetuados = []
 saquesEfetuados = []
 clientesCadastrados = []
@@ -50,22 +43,22 @@ clientesCadastrados = []
 while True:
 
     # Menu
-    os.system('cls')
-    sublinharPalavra('The Bank')
+    defs.clearTerminal()
+    defs.sublinharPalavra('The Bank')
     print('Opções: ')
-    sublinharPalavra(
+    defs.sublinharPalavra(
         '[ 1 ] - Depósito\n[ 2 ] - Saque\n[ 3 ] - Extrato\n[ 4 ] - Cadastrar Cliente\n[ 5 ] - Clientes Cadastrados\n[ 6 ] - Acessar Conta\n[ 7 ] - Desligar')
     escolha = int(input(''))
 
     # Deposito
     if escolha == 1:
-        os.system('cls')
-        sublinharPalavra('Valor a ser depositado: ')
-        valor = int(input(''))
-        os.system('cls')
+        defs.clearTerminal()
+        defs.sublinharPalavra('Valor a ser depositado: ')
+        valor = float(input(''))
+        defs.clearTerminal()
         print('Deposito sendo efetuado...')
         sleep(2)
-        sublinharPalavra('Deposito efetuado com sucesso.')
+        defs.sublinharPalavra('Deposito efetuado com sucesso.')
 
         carteira = carteira + valor
         depositosEfetuados.append(valor)
@@ -73,7 +66,7 @@ while True:
         totalDeDepositos = totalDeDepositos + 1
 
         print('Deseja fazer outra operação?')
-        sublinharPalavra('[ 1 ] - Sim\n[ 2 ] - Não')
+        defs.sublinharPalavra('[ 1 ] - Sim\n[ 2 ] - Não')
         escolhaDep = int(input(''))
         if escolhaDep == 2:
             print(f'Você possui em sua conta:\nR${carteira}')
@@ -83,14 +76,14 @@ while True:
     # Saque
     elif escolha == 2:
         while True:
-            os.system('cls')
-            sublinharPalavra('Valor a ser sacado: ')
-            valor = int(input(''))
+            defs.clearTerminal()
+            defs.sublinharPalavra('Valor a ser sacado: ')
+            valor = float(input(''))
             if carteira < valor:
                 print(
                     f'Você possui apenas R${carteira}\nDeseja tentar novamente ?')
-                sublinharPalavra('[ 1 ] - Sim\n[ 2 ] - Não')
-                tentativa = int(input(''))
+                defs.sublinharPalavra('[ 1 ] - Sim\n[ 2 ] - Não')
+                tentativa = float(input(''))
                 if tentativa == 2:
                     print('Reiniciando...')
                     sleep(2)
@@ -108,14 +101,13 @@ while True:
                 sleep(2)
                 break
 
-    # Extrato
     elif escolha == 3:
-        os.system('cls')
+        defs.clearTerminal()
         print('Extrato sendo gerado...')
         sleep(2)
-        os.system('cls')
+        defs.clearTerminal()
 
-        sublinharPalavra('Saques efetuados:')
+        defs.sublinharPalavra('Saques efetuados:')
         for c in (saquesEfetuados):
             print(c, horaSaque, '\n')
 
@@ -126,7 +118,7 @@ while True:
         else:
             print(f'Totalizando: {totalDeSaques} saques')
 
-        sublinharPalavra('Depositos efetuados:')
+        defs.sublinharPalavra('Depositos efetuados:')
         for x in (depositosEfetuados):
             print(x, horaDeposito, '\n')
         if totalDeDepositos == 1:
@@ -138,43 +130,40 @@ while True:
 
         print('\nFoi cobrada uma taxa de R$0.50 por termos gerado o extrato')
         carteira = carteira - 0.50
-        sublinharPalavra(
+        defs.sublinharPalavra(
             'Sua conta possui:\nR${:.2f} disponiveis'.format(carteira))
 
         input('\nPressione ENTER para voltar ao menu:\n')
 
-    # Cadastro
 
     elif escolha == 4:
         cadastroCliente()
 
-    # Mostrar clientes cadastrados
 
     elif escolha == 5:
-        os.system('cls')
+        defs.clearTerminal()
         for c in (clientesCadastrados):
             print(c, '\n')
         input('Digite ENTER para voltar ao menu da aplicação')
 
     elif escolha == 6:
-        os.system('cls')
+        defs.clearTerminal()
         print('Opção em desenvolvimento\n')
         input('Digite ENTER para voltar ao menu da aplicação')
 
-    # Desligar Sistema (Será tudo perdido)
 
     elif escolha == 7:
         print('O sistema está sendo encerrado...')
         sleep(2)
-        os.system('cls')
+        defs.clearTerminal()
         print('Sistema encerrado.')
         sleep(1)
-        os.system('cls')
+        defs.clearTerminal()
         break
 
     else:
         print("ERRO: Opção inválida\nDeseja tentar novamente?")
-        sublinharPalavra('[ 1 ] - Sim\n[ 2 ] - Não')
+        defs.sublinharPalavra('[ 1 ] - Sim\n[ 2 ] - Não')
         continuar = int(input(''))
         if continuar == 2:
             break
